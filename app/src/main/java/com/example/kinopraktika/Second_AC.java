@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.JsonReader;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,18 +30,17 @@ public class Second_AC extends AppCompatActivity {
     TextView tvInfo;
     EditText tvName;
     MyTask mt;
-    public class S extends AppCompatActivity {
-
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_second);
+
             tvInfo = (TextView) findViewById(R.id.tvInfo);
             tvName = (EditText) findViewById(R.id.editTextTextPersonName);
         }
 
-    }
+
     @SuppressLint("StaticFieldLeak")
     class MyTask extends AsyncTask<String, Void, ArrayList<String[]>> {
         @Override
