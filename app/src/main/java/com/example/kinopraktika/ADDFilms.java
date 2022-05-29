@@ -190,7 +190,7 @@ public class ADDFilms extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            tvInfo.setText("Подождите...");
+            tvInfo.setText("Фильм добавлен");
         }
 
         @Override
@@ -301,7 +301,7 @@ public class ADDFilms extends AppCompatActivity {
             ADDFilms.ClAdapter clAdapter=new ADDFilms.ClAdapter(tvInfo.getContext(),result);
 //            lvMain = (ListView) findViewById(R.id.lvMain);
             lvMain.setAdapter(clAdapter);
-            tvInfo.setText("Фильм добавлен.");
+            tvInfo.setText("Подождите...");
         }
 
     }
