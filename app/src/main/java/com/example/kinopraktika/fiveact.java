@@ -1,47 +1,39 @@
 package com.example.kinopraktika;
 
-import android.annotation.SuppressLint;
+import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.JsonReader;
-import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.TextView;
-
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.view.View;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.MalformedURLException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
+import java.io.UnsupportedEncodingException;
+import android.util.JsonReader;
+import android.widget.BaseAdapter;
 import java.util.ArrayList;
+import android.widget.ListView;
 import java.util.List;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
 
-public class Second_AC extends AppCompatActivity {
+public class fiveact extends AppCompatActivity {
+    fiveact.MyTask mt;
     TextView tvInfo;
     EditText tvName;
-    MyTask mt;
 
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_second);
-
-            tvInfo = (TextView) findViewById(R.id.tvInfo);
-            tvName = (EditText) findViewById(R.id.editTextTextPersonName);
-        }
-
-
-    //@SuppressLint("StaticFieldLeak")
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_fiveactlayout);
+        tvInfo = (TextView) findViewById(R.id.tvInfo);
+        tvName = (EditText) findViewById(R.id.editTextTextPersonName);
+    }
     class MyTask extends AsyncTask<String, Void, ArrayList<String[]>> {
         @Override
         protected void onPreExecute() {
@@ -54,7 +46,7 @@ public class Second_AC extends AppCompatActivity {
             HttpURLConnection myConnection = null;
             try {
                 URL mySite = new
-                        URL("http://192.168.0.109/kino?id=1&name="+params[0]);
+                        URL("http://192.168.0.109//kino?id=2&name="+params[0]);
                 myConnection =
                         (HttpURLConnection) mySite.openConnection();
             } catch (MalformedURLException e) {
@@ -69,7 +61,6 @@ public class Second_AC extends AppCompatActivity {
                 e.printStackTrace();
             }
             if (i==200) {
-                Log.d("ПРОВЕРКА","Ошибок нет, проект работает исправно");
                 InputStream responseBody=null;
                 try {
                     responseBody = myConnection.getInputStream();
@@ -77,8 +68,12 @@ public class Second_AC extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 InputStreamReader responseBodyReader =null;
-                responseBodyReader =
-                        new InputStreamReader(responseBody, StandardCharsets.UTF_8);
+                try {
+                    responseBodyReader =
+                            new InputStreamReader(responseBody, "UTF-8");
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                }
                 JsonReader jsonReader;
                 jsonReader = null;
                 jsonReader = new JsonReader(responseBodyReader);
@@ -100,7 +95,7 @@ public class Second_AC extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     };
-                    String[] str=new String[2];
+                    String[] str=new String[3];
                     int n=0;
                     while (true) {
                         try {
@@ -142,14 +137,22 @@ public class Second_AC extends AppCompatActivity {
         @Override
         protected void onPostExecute(ArrayList<String[]> result) {
             super.onPostExecute(result);
-            Second_AC.ClAdapter clAdapter=new
-                    Second_AC.ClAdapter(tvInfo.getContext(),result);
+            fiveact.ClAdapter clAdapter=new
+                    fiveact.ClAdapter(tvInfo.getContext(),result);
             ListView lvMain = (ListView) findViewById(R.id.lvMain);
             lvMain.setAdapter(clAdapter);
-            tvInfo.setText("Поиск завершён.");
+            tvInfo.setText("Поиск завершен.");
+
         }
     }
-    class ClAdapter extends BaseAdapter {
+
+    public void onclick(View v) {
+        mt = new fiveact.MyTask();
+        mt.execute(tvName.getText().toString());
+    }
+
+
+    class ClAdapter extends BaseAdapter{
         Context ctx;
         LayoutInflater lInflater;
         List<String[]> lines;
@@ -176,16 +179,13 @@ public class Second_AC extends AppCompatActivity {
         {
             View view = convertView;
             if (view == null) {
-                view = lInflater.inflate(R.layout.activity_cladapterr, parent, false);
+                view = lInflater.inflate(R.layout.triedaddapter, parent, false);
             };
             String[] p =(String[]) getItem(position);
-            ((TextView) view.findViewById(R.id.tvText)).setText(p[0]);
-            ((TextView) view.findViewById(R.id.tvText1)).setText(p[1]);
+            ((TextView) view.findViewById(R.id.tvText2)).setText(p[0]);
+            ((TextView) view.findViewById(R.id.tvText)).setText(p[1]);
+            ((TextView) view.findViewById(R.id.tvText1)).setText(p[2]);
             return view;
         };
-    }
-    public void onclick(View v) {
-        mt = new Second_AC.MyTask();
-        mt.execute(tvName.getText().toString());
     }
 }

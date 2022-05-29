@@ -13,6 +13,12 @@
         android:theme="@style/Theme.KinoPraktika"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ADDFilms"
+            android:exported="false" />
+        <activity
+            android:name=".fiveact"
+            android:exported="false" />
+        <activity
             android:name=".Post"
             android:exported="false" />
         <activity

@@ -15,21 +15,21 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:onClick="onclick"
-        android:text="@string/start">
+        android:text="Поиск"
+        android:layout_gravity="center">
     </Button>
-    <ProgressBar
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-    </ProgressBar>
     <TextView
         android:id="@+id/tvInfo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="">
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        android:text=""
+        android:layout_gravity="center">
     </TextView>
     <ListView
+        android:layout_marginTop="10dp"
         android:id="@+id/lvMain"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1">
+        android:layout_height="match_parent">
     </ListView></LinearLayout>
